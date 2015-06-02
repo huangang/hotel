@@ -41,7 +41,18 @@ public partial class login : System.Web.UI.Page
             Session["email"] = email;
             Session["password"] =  password;
             Session["role"] = role;
-            Response.Write("<script>alert('登录成功');</script>");
+            if (role == "manager")
+            {
+                Response.Write("<script>alert('登录成功');window.location.href=\"manager/index.aspx\";</script>");
+            }
+            else if(role == "operator")
+            {
+                Response.Write("<script>alert('登录成功');window.location.href=\"operator/index.aspx\";</script>");
+            }
+            else if (role == "normal")
+            {
+                Response.Write("<script>alert('登录成功');window.location.href=\"normal/index.aspx\";</script>");
+            }
             
         }
     }
