@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="manager_room_index" %>
+<%@ Import Namespace="System.Data" %>
+<%@ Import Namespace="Mysqlserver" %>
 
 <!DOCTYPE html>
 <html>
@@ -49,6 +51,31 @@
         <th>管理操作</th>
     </tr>
     </thead>
+     <%
+        SqlServerDataBase obj = new SqlServerDataBase();
+        string sql = "select *from [room]";
+        DataSet ds = obj.Select(sql, null);
+        if (ds != null || ds.Tables.Count != 0 || ds.Tables[0].Rows.Count != 0)
+        {
+            //Response.Write(ds.Tables[0].Rows.Count);
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                string rid = ds.Tables[0].Rows[i][0].ToString();
+                string tid = ds.Tables[0].Rows[i][1].ToString();
+                sql = "select type_name from type where tid="+tid;
+                string type_name = obj.Select(sql, null).Tables[0].Rows[0][0].ToString();
+                string number = ds.Tables[0].Rows[i][2].ToString();
+                string status = ds.Tables[0].Rows[i][3].ToString();
+                Response.Write("<tr><td>" + number + "</td>");
+                Response.Write("<td>" + type_name + "</td>");
+                Response.Write("<td>" + status  + "</td>");
+                Response.Write("<td>" + "<a href='edit.aspx?rid=" + rid + "&tid=" + tid + "&status=" + status +"'>编辑</a> <a href='#' onclick='del(" + rid + ")'>删除</a>" + "</td></tr>");
+            }
+            
+        }
+        
+
+    %>
    
 </table>
 <div class="inline pull-right page">
@@ -85,13 +112,18 @@
 
         if (confirm("确定要删除吗？")) {
 
-            xmlhttp.open("GET", "/DoDelete?table=post&pid=" + id, true);
+            xmlhttp.open("GET", "../../delete.ashx?table=room&rid=" + id, true);
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4)
                 //xmlhttp.status==404 代表 没有发现该文件
                     if (xmlhttp.status == 200) {
                         //alert(xmlhttp.status);
                         status = xmlhttp.responseText;
+                        if (status == 1) {
+                            alert("删除成功");
+                        } else {
+                            alert("删除失败");
+                        }
                         console.log(status);
                     } else {
                         alert("发生错误：" + xmlhttp.status);
