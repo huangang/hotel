@@ -36,6 +36,32 @@ public class delete : IHttpHandler {
                 context.Response.Write(0);
             }
         }
+        else if (table == "user")
+        {
+            string uid = context.Request.QueryString["uid"];
+            string sql = "delete from [user] where uid=" + uid;
+            if (obj.Delete(sql, null))
+            {
+                context.Response.Write(1);
+            }
+            else
+            {
+                context.Response.Write(0);
+            }
+        }
+        else if (table == "orders")
+        {
+            string oid = context.Request.QueryString["oid"];
+            string sql = "delete from [orders] where uid=" + oid;
+            if (obj.Delete(sql, null))
+            {
+                context.Response.Write(1);
+            }
+            else
+            {
+                context.Response.Write(0);
+            }
+        }
        
     }
  
