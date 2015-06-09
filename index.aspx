@@ -92,6 +92,7 @@
                             {
                                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                                 {
+                                
                                     string tid = ds.Tables[0].Rows[i][0].ToString();
                                     sql = "select count(*) from [room] where tid='" + tid +"'";
                                     string countr = obj.Select(sql, null).Tables[0].Rows[0][0].ToString();
@@ -100,14 +101,17 @@
                                     string type_name = ds.Tables[0].Rows[i][1].ToString();
                                     string price = ds.Tables[0].Rows[i][2].ToString();
                                     string description = ds.Tables[0].Rows[i][3].ToString();
-                                    Response.Write("<div class=\"row\"><div class=\"col-md-3 col-sm-6\"><div class=\"panel panel-primary\"><header class=\"panel-heading\"><h1>" + type_name  + "</h1>");
+                                    Response.Write("<div class=\"col-md-3 col-sm-6\"><div class=\"panel panel-primary\"><header class=\"panel-heading\"><h1>" + type_name  + "</h1>");
                                     Response.Write("<div class=\"the-price\"> ￥"+ price +"<span class=\"subscript\">/ month</span></div></header>");
                                     Response.Write("<div class=\"panel-body\"><table class=\"table\"><tbody><tr><td>总共有"+countr +"个房间</td></tr>");
                                     Response.Write("<tr class=\"active\"><td>空房间：" + emptycountr + "个</td></tr>");
                                     Response.Write("<div class=\"panel-body\"><table class=\"table\"><tbody><tr><td>" + description + "</td></tr>");
                                     Response.Write("</tbody></table> </div><footer class=\"panel-footer\"><a href=\"#\" class=\"btn btn-block btn-primary\">请登录后台预定</a></footer></div></div>");
-                                    
+                            
+
                                 }
+
+                                    
                             }
    
 
