@@ -2,16 +2,17 @@
 <%
     if(Session["uid"]==null){
         Response.Write("<script>alert(\"请登陆\");window.location.href=\"../login.aspx\";</script>");
-        if(Session["role"].ToString() != "normal"){
-            Response.Write("<script>alert(\"您不是用户\");window.location.href=\"../index.aspx\";</script>");
-        }
+    }
+    if (Session["role"].ToString() != "normal")
+    {
+        Response.Write("<script>alert(\"您不是普通用户\");window.location.href=\"../index.aspx\";</script>");
     }
 %>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>用户</title>
+    <title>普通用户</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="../static_admin/assets/css/dpl-min.css" rel="stylesheet" type="text/css" />
     <link href="../static_admin/assets/css/bui-min.css" rel="stylesheet" type="text/css" />

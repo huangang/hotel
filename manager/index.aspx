@@ -2,10 +2,10 @@
 <%
     if(Session["uid"]==null){
         Response.Write("<script>alert(\"请登陆\");window.location.href=\"../login.aspx\";</script>");
-        if (Session["role"].ToString() != "manager" && Session["role"] == null)
-        {
-            Response.Write("<script>alert(\"您不是管理员\");window.location.href=\"../index.aspx\";</script>");
-        }
+    }
+    if (Session["role"].ToString() != "manager")
+    {
+        Response.Write("<script>alert(\"您不是管理员\");window.location.href=\"../index.aspx\";</script>");
     }
 %>
 
