@@ -1,6 +1,9 @@
 USE [hotel]
 GO
-/****** Object:  Table [dbo].[user]    Script Date: 05/31/2015 15:43:04 ******/
+/****** Object:  User [huangang]    Script Date: 06/09/2015 09:39:28 ******/
+CREATE USER [huangang] FOR LOGIN [huangang] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  Table [dbo].[user]    Script Date: 06/09/2015 09:39:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -13,7 +16,7 @@ CREATE TABLE [dbo].[user](
 	[email] [varchar](255) NOT NULL,
 	[password] [varchar](255) NOT NULL,
 	[role] [varchar](50) NOT NULL,
-	[register_time] [timestamp] NOT NULL,
+	[register_time] [datetime] NULL,
  CONSTRAINT [PK_user] PRIMARY KEY CLUSTERED 
 (
 	[uid] ASC
@@ -34,7 +37,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'身份' , @lev
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'注册时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'user', @level2type=N'COLUMN',@level2name=N'register_time'
 GO
-/****** Object:  Table [dbo].[type]    Script Date: 05/31/2015 15:43:04 ******/
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'用户表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'user'
+GO
+/****** Object:  Table [dbo].[type]    Script Date: 06/09/2015 09:39:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -62,7 +67,9 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'价格' , @lev
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'描述' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'type', @level2type=N'COLUMN',@level2name=N'description'
 GO
-/****** Object:  Table [dbo].[room]    Script Date: 05/31/2015 15:43:04 ******/
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间类型表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'type'
+GO
+/****** Object:  Table [dbo].[room]    Script Date: 06/09/2015 09:39:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -82,6 +89,11 @@ CREATE TABLE [dbo].[room](
 GO
 SET ANSI_PADDING OFF
 GO
+CREATE NONCLUSTERED INDEX [IX_room] ON [dbo].[room] 
+(
+	[rid] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间id' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'room', @level2type=N'COLUMN',@level2name=N'rid'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'类型id' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'room', @level2type=N'COLUMN',@level2name=N'tid'
@@ -90,21 +102,28 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间编号' 
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'room', @level2type=N'COLUMN',@level2name=N'status'
 GO
-/****** Object:  Table [dbo].[orders]    Script Date: 05/31/2015 15:43:04 ******/
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'room'
+GO
+/****** Object:  Table [dbo].[orders]    Script Date: 06/09/2015 09:39:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[orders](
 	[oid] [int] IDENTITY(1,1) NOT NULL,
 	[uid] [int] NOT NULL,
 	[rid] [int] NOT NULL,
-	[order_time] [timestamp] NOT NULL,
+	[order_time] [datetime] NULL,
+	[status] [varchar](255) NOT NULL,
  CONSTRAINT [PK_orders] PRIMARY KEY CLUSTERED 
 (
 	[oid] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+SET ANSI_PADDING OFF
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'订单id' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'orders', @level2type=N'COLUMN',@level2name=N'oid'
 GO
@@ -114,23 +133,33 @@ EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'房间id' , @l
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'订单时间' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'orders', @level2type=N'COLUMN',@level2name=N'order_time'
 GO
-/****** Object:  ForeignKey [FK_orders_room]    Script Date: 05/31/2015 15:43:04 ******/
-ALTER TABLE [dbo].[orders]  WITH CHECK ADD  CONSTRAINT [FK_orders_room] FOREIGN KEY([rid])
-REFERENCES [dbo].[room] ([rid])
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'订单状态' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'orders', @level2type=N'COLUMN',@level2name=N'status'
 GO
-ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_room]
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'订单表' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'orders'
 GO
-/****** Object:  ForeignKey [FK_orders_user]    Script Date: 05/31/2015 15:43:04 ******/
-ALTER TABLE [dbo].[orders]  WITH CHECK ADD  CONSTRAINT [FK_orders_user] FOREIGN KEY([uid])
-REFERENCES [dbo].[user] ([uid])
+/****** Object:  Default [DF_user_register_time]    Script Date: 06/09/2015 09:39:29 ******/
+ALTER TABLE [dbo].[user] ADD  CONSTRAINT [DF_user_register_time]  DEFAULT (getdate()) FOR [register_time]
 GO
-ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_user]
+/****** Object:  Default [DF_orders_order_time]    Script Date: 06/09/2015 09:39:29 ******/
+ALTER TABLE [dbo].[orders] ADD  CONSTRAINT [DF_orders_order_time]  DEFAULT (getdate()) FOR [order_time]
 GO
-/****** Object:  ForeignKey [FK_room_type]    Script Date: 05/31/2015 15:43:04 ******/
+/****** Object:  ForeignKey [FK_room_type]    Script Date: 06/09/2015 09:39:29 ******/
 ALTER TABLE [dbo].[room]  WITH NOCHECK ADD  CONSTRAINT [FK_room_type] FOREIGN KEY([tid])
 REFERENCES [dbo].[type] ([tid])
 GO
 ALTER TABLE [dbo].[room] CHECK CONSTRAINT [FK_room_type]
 GO
+/****** Object:  ForeignKey [FK_orders_room]    Script Date: 06/09/2015 09:39:29 ******/
+ALTER TABLE [dbo].[orders]  WITH CHECK ADD  CONSTRAINT [FK_orders_room] FOREIGN KEY([rid])
+REFERENCES [dbo].[room] ([rid])
+GO
+ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_room]
+GO
+/****** Object:  ForeignKey [FK_orders_user]    Script Date: 06/09/2015 09:39:29 ******/
+ALTER TABLE [dbo].[orders]  WITH CHECK ADD  CONSTRAINT [FK_orders_user] FOREIGN KEY([uid])
+REFERENCES [dbo].[user] ([uid])
+GO
+ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_user]
+GO
 
-
+INSERT INTO [dbo].[user] (uid,username,email,password,role,register_time)  values('1','gang','123456@qq.com','E10ADC3949BA59ABBE56E057F20F883E','manager','2015-06-09 09:48:13.070')
