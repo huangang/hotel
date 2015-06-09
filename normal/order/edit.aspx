@@ -91,7 +91,6 @@
         <td>
             <select name="order_status">
                     <option value="progress" selected="selected">progress</option>
-                    <option value="finish">finish</option>
             </select>
         </td>
      </tr>

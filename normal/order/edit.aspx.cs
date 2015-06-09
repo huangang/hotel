@@ -55,7 +55,7 @@ public partial class manager_order_edit : System.Web.UI.Page
                 bool b1 = obj.Update(sql, null);
                 sql = "update [room] set status='" + room_status + "' where rid=" + empty_room_id;
                 bool b2 = obj.Update(sql, null);
-                sql = "update [orders] set rid='" + empty_room_id +  "' where oid = " + oid;
+                sql = "update [orders] set rid='" + empty_room_id + "' where oid = " + oid;
                 if (obj.Update(sql, null))
                 {
                     Response.Write("<script>alert('修改订单成功');window.location.href=\"index.aspx\";</script>");
@@ -67,6 +67,6 @@ public partial class manager_order_edit : System.Web.UI.Page
 
             }
         }
-       
+
     }
 }

@@ -52,14 +52,21 @@ public class delete : IHttpHandler {
         else if (table == "orders")
         {
             string oid = context.Request.QueryString["oid"];
-            string sql = "delete from [orders] where uid=" + oid;
-            if (obj.Delete(sql, null))
+            string sql = "select rid from [orders] where oid="+oid;
+            string rid = obj.Select(sql, null).Tables[0].Rows[0][0].ToString();
+            sql = "update [room] set status='empty' where rid=" + rid;
+            bool b = obj.Update(sql, null);
+            if (b)
             {
-                context.Response.Write(1);
-            }
-            else
-            {
-                context.Response.Write(0);
+                sql = "delete from [orders] where oid=" + oid;
+                if (obj.Delete(sql, null))
+                {
+                    context.Response.Write(1);
+                }
+                else
+                {
+                    context.Response.Write(0);
+                }
             }
         }
        

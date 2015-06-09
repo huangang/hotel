@@ -40,7 +40,7 @@
     <form id="form1" runat="server" class="form-inline definewidth m20" >
     用户名：
         <input type="text" name="rolename" id="rolename"class="abc input-default" placeholder="" value=""/>&nbsp;&nbsp;  
-    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">新增订单</button>
+    <button type="submit" class="btn btn-primary">查询</button>&nbsp;&nbsp; <button type="button" class="btn btn-success" id="addnew">预定</button>
     </form>
 <table class="table table-bordered table-hover definewidth m10" >
     <thead>
@@ -57,7 +57,7 @@
     <%
         
         SqlServerDataBase obj = new SqlServerDataBase();
-        string sql = "select *from [orders]";
+        string sql = "select *from [orders] where uid ='" + Session["uid"] + "'";
         DataSet ds = obj.Select(sql, null);
         if (ds != null || ds.Tables.Count != 0 || ds.Tables[0].Rows.Count != 0)
         {
@@ -67,7 +67,7 @@
                 string uid = ds.Tables[0].Rows[i][1].ToString();
                 string order_time = ds.Tables[0].Rows[i][3].ToString();
                 string status = ds.Tables[0].Rows[i][4].ToString();
-                string sql2 = "select username,email from [user] where uid="+uid;
+                string sql2 = "select username,email from [user] where uid=" + uid;
                 DataSet ds2 = obj.Select(sql2, null);
                 string username = ds2.Tables[0].Rows[0][0].ToString();
                 string email = ds2.Tables[0].Rows[0][1].ToString();
@@ -76,15 +76,15 @@
                 DataSet ds3 = obj.Select(sql3, null);
                 string tid = ds3.Tables[0].Rows[0][0].ToString();
                 string number = ds3.Tables[0].Rows[0][1].ToString();
-                string sql4 = "select type_name from [type] where tid="+tid;
+                string sql4 = "select type_name from [type] where tid=" + tid;
                 DataSet ds4 = obj.Select(sql4, null);
                 string type_name = ds4.Tables[0].Rows[0][0].ToString();
                 Response.Write("<tr><td>" + oid + "</td>");
                 Response.Write("<td>" + username + "</td>");
                 Response.Write("<td>" + email + "</td>");
-                Response.Write("<td>" + number +"</td>");
-                Response.Write("<td>" + type_name +"</td>");
-                Response.Write("<td>" + order_time +"</td>");
+                Response.Write("<td>" + number + "</td>");
+                Response.Write("<td>" + type_name + "</td>");
+                Response.Write("<td>" + order_time + "</td>");
                 if (status == "progress")
                 {
                     Response.Write("<td>" + "<a href='edit.aspx?oid=" + oid + "&uid=" + uid + "&rid=" + rid + "'>编辑</a> <a href='#' onclick='del(" + oid + ")'>删除</a>" + "</td></tr>");
@@ -93,7 +93,7 @@
                 {
                     Response.Write("<td>已结束</td></tr>");
                 }
-
+                
             }
         }
 

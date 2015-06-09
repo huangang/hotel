@@ -2,7 +2,7 @@
 <%
     if(Session["uid"]==null){
         Response.Write("<script>alert(\"请登陆\");window.location.href=\"../login.aspx\";</script>");
-        if(Session["role"] != "operator"){
+        if(Session["role"].ToString() != "operator"){
             Response.Write("<script>alert(\"您不是操作员\");window.location.href=\"../index.aspx\";</script>");
         }
     }
@@ -24,7 +24,7 @@
     <div class="dl-title">
     </div>
 
-    <div class="dl-log"><a href="../index.aspx">返回前台</a>&nbsp;&nbsp;欢迎您，<span class="dl-log-user"><% Response.Write(Session["username"]); %></span><a href="../DoExit" title="退出系统" class="dl-log-quit">[退出]</a>
+    <div class="dl-log"><a href="../index.aspx">返回前台</a>&nbsp;&nbsp;欢迎您，<span class="dl-log-user"><% Response.Write(Session["username"]); %></span><a href="../exit.aspx" title="退出系统" class="dl-log-quit">[退出]</a>
     </div>
 </div>
 <div class="content">
@@ -47,10 +47,8 @@
     BUI.use('common/main', function () {
         var config = [
             { id: '1', menu: [{ text: '系统管理', items: [
-                { id: '11', text: '文章管理', href: 'Post/index.aspx' },
-                { id: '12', text: '用户管理', href: 'User/index.aspx' },
-                { id: '13', text: '分类管理', href: 'Sort/index.aspx' },
-                { id: '14', text: '评论管理', href: 'Comment/index.aspx'}]
+                { id: '13', text: '用户管理', href: 'user/index.aspx' },
+                { id: '14', text: '订单管理', href: 'order/index.aspx'}]
             }]
             },
             { id: '2', homePage: '21', menu: [{ text: '个人中心', items: [{ id: '21', text: '个人设置', href: 'UserCenter/index.aspx' }, { id: '22', text: '修改密码', href: 'UserCenter/ChangePassword.aspx' }, { id: '23', text: '修改头像', href: 'UserCenter/ChangeAvatar.aspx'}]}] }

@@ -5,26 +5,37 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Mysqlserver;
 
 public partial class _Default : System.Web.UI.Page
 {
-    SqlServerDataBase obj = new SqlServerDataBase(); 
+   
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        DataSet ds = obj.Select("select * from [user];", null);
-        Response.Write(ds);
-        if (ds == null)  
-        {  
-            Response.Write("false");
-
-        } 
-        else 
-        {  
-            Response.Write("true");
-        }  
-
+        if (Session["uid"] != null)
+        {
+            string role = Session["role"].ToString();
+            if (role == "manager")
+            {
+                Response.Redirect("manager/index.aspx");
+            }
+            else if(role == "operator" )
+            {
+                Response.Redirect("operator/index.aspx");    
+            }
+            else if (role == "normal")
+            {
+                Response.Redirect("normal/index.aspx");   
+            }
+            else
+            {
+                Response.Redirect("login.aspx");   
+            }
+            
+        }
+        else
+        {
+            Response.Redirect("login.aspx");
+        }
 
     }
 }

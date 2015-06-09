@@ -67,7 +67,7 @@
                 string uid = ds.Tables[0].Rows[i][1].ToString();
                 string order_time = ds.Tables[0].Rows[i][3].ToString();
                 string status = ds.Tables[0].Rows[i][4].ToString();
-                string sql2 = "select username,email from [user] where uid="+uid;
+                string sql2 = "select username,email from [user] where uid=" + uid;
                 DataSet ds2 = obj.Select(sql2, null);
                 string username = ds2.Tables[0].Rows[0][0].ToString();
                 string email = ds2.Tables[0].Rows[0][1].ToString();
@@ -76,15 +76,15 @@
                 DataSet ds3 = obj.Select(sql3, null);
                 string tid = ds3.Tables[0].Rows[0][0].ToString();
                 string number = ds3.Tables[0].Rows[0][1].ToString();
-                string sql4 = "select type_name from [type] where tid="+tid;
+                string sql4 = "select type_name from [type] where tid=" + tid;
                 DataSet ds4 = obj.Select(sql4, null);
                 string type_name = ds4.Tables[0].Rows[0][0].ToString();
                 Response.Write("<tr><td>" + oid + "</td>");
                 Response.Write("<td>" + username + "</td>");
                 Response.Write("<td>" + email + "</td>");
-                Response.Write("<td>" + number +"</td>");
-                Response.Write("<td>" + type_name +"</td>");
-                Response.Write("<td>" + order_time +"</td>");
+                Response.Write("<td>" + number + "</td>");
+                Response.Write("<td>" + type_name + "</td>");
+                Response.Write("<td>" + order_time + "</td>");
                 if (status == "progress")
                 {
                     Response.Write("<td>" + "<a href='edit.aspx?oid=" + oid + "&uid=" + uid + "&rid=" + rid + "'>编辑</a> <a href='#' onclick='del(" + oid + ")'>删除</a>" + "</td></tr>");
@@ -93,7 +93,7 @@
                 {
                     Response.Write("<td>已结束</td></tr>");
                 }
-
+                
             }
         }
 
@@ -136,7 +136,7 @@
 
         if (confirm("确定要删除吗？")) {
 
-            xmlhttp.open("GET", "../../delete.ashx?table=orders&oid=" + id, true);
+            xmlhttp.open("GET", "../../delete.ashx?table=orders&oiid=" + id, true);
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4)
                 //xmlhttp.status==404 代表 没有发现该文件
