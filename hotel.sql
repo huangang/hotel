@@ -162,4 +162,4 @@ GO
 ALTER TABLE [dbo].[orders] CHECK CONSTRAINT [FK_orders_user]
 GO
 
-INSERT INTO [dbo].[user] (uid,username,email,password,role,register_time)  values('1','gang','123456@qq.com','E10ADC3949BA59ABBE56E057F20F883E','manager','2015-06-09 09:48:13.070')
+insert into [dbo].[user] ([username],[email],[password],[role],[register_time]) values('gang','gang@pupued.com','E10ADC3949BA59ABBE56E057F20F883E','manager','2015-06-09 10:03:10.313');
