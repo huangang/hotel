@@ -1,6 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="order.aspx.cs" Inherits="order" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="Mysqlserver" %>
+<%
+    if (Session["uid"] == null || Session["uid"].ToString() == "")
+    {
+        Response.Write("<script>alert(\"请登陆\");window.location.href=\"login.aspx\";</script>");
+    }
+%>
 
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -58,7 +64,7 @@
                         Response.Write("<li><a href='register.aspx' onclick=\"window.location.href='register.aspx';\">Register</a></li>");
                     }
                 %>
-                <li><a href="#room">Room</a></li>
+                <li><a href="#order">Order</a></li>
 
                
               </ul>
@@ -68,72 +74,63 @@
       </header>
 
       <main id="main" class="site-main">
-        <section class="section section-center section-cta">
+        
+         <section id="order" class="section section-center section-contact">
           <div class="container">
-            <h2 class="section-title"><span>Ready to Start?</span></h2>
-            <p>ASP.net 酒店管理系统</p>
-            <div class="main-action row">
-              <div class="col-md-3 col-md-offset-3 col-sm-4 col-sm-offset-2"><a href="#contact" class="smooth-scroll btn btn-lg btn-block btn-danger">Request Quote</a></div>
-              <div class="col-md-3 col-sm-4"><a href="#room" class="smooth-scroll btn btn-lg btn-block btn-default">View Rooms</a></div>
+            <h2 class="section-title"><span>Order Room</span></h2>
+            <p>Thanks for you</p>
+            <div class="main-action">
+              <form id="orderform" runat="server">
+                <div class="results"></div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label class="sr-only">房间号</label>
+                      <!--<asp:TextBox ID="room_number" runat="server"  class="form-control" placeholder="房间号" require></asp:TextBox>-->
+                      <select  class="form-control"  name="room_number">
+                          <%
+                              string typeid = Request.QueryString["tid"];
+                              SqlServerDataBase obj = new SqlServerDataBase();
+                              string sql = "select *from [room] where tid='" + typeid + "' and status='empty'";
+                              DataSet ds = obj.Select(sql, null);
+                              if (ds != null || ds.Tables.Count != 0 || ds.Tables[0].Rows.Count != 0)
+                              {
+                                  for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                                  {
+                                      Response.Write("<option value=\"" + ds.Tables[0].Rows[i][0].ToString() + " \"> " + ds.Tables[0].Rows[i][2].ToString() + "</option>");
+                                  }
+                              }
+                          %>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="sr-only">房间类型</label>
+                      <asp:TextBox ID="room_type" runat="server"  class="form-control" 
+                            placeholder="房间类型" require ReadOnly="True"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                      <label class="sr-only">预定人</label>
+                      <asp:TextBox ID="username" runat="server"  class="form-control" placeholder="预定人" 
+                            require ReadOnly="True"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                      <label class="sr-only">价格</label>
+                      <asp:TextBox ID="price" runat="server"  class="form-control" placeholder="价格" 
+                            require ReadOnly="True"></asp:TextBox>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                          <asp:Button ID="submit" runat="server" Text="Submit" 
+                                class="btn btn-default btn-block" onclick="submit_Click"></asp:Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-
-        </section>     
-         <section id="room" class="section section-center section-pricing">
-            <div class="container">
-                <h2 class="section-title"><span>Rooms Pricing</span></h2>
-                <div class="pricing-table">
-                    <div class="row">
-                          <%
-
-                            SqlServerDataBase obj = new SqlServerDataBase();
-                            string sql = "select *from [type]";
-                            DataSet ds = obj.Select(sql, null);
-                            if (ds != null || ds.Tables.Count != 0 || ds.Tables[0].Rows.Count != 0)
-                            {
-                                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
-                                {
-                                
-                                    string tid = ds.Tables[0].Rows[i][0].ToString();
-                                    sql = "select count(*) from [room] where tid='" + tid +"'";
-                                    string countr = obj.Select(sql, null).Tables[0].Rows[0][0].ToString();
-                                    sql = "select count(*) from [room] where tid='" + tid + "' and status = 'empty'";
-                                    string emptycountr = obj.Select(sql, null).Tables[0].Rows[0][0].ToString();
-                                    string type_name = ds.Tables[0].Rows[i][1].ToString();
-                                    string price = ds.Tables[0].Rows[i][2].ToString();
-                                    string description = ds.Tables[0].Rows[i][3].ToString();
-                                    Response.Write("<div class=\"col-md-3 col-sm-6\"><div class=\"panel panel-primary\"><header class=\"panel-heading\"><h1>" + type_name  + "</h1>");
-                                    Response.Write("<div class=\"the-price\"> ￥"+ price +"<span class=\"subscript\">/ day</span></div></header>");
-                                    Response.Write("<div class=\"panel-body\"><table class=\"table\"><tbody><tr><td>总共有"+countr +"个房间</td></tr>");
-                                    Response.Write("<tr class=\"active\"><td>空房间：" + emptycountr + "个</td></tr>");
-                                    Response.Write("<div class=\"panel-body\"><table class=\"table\"><tbody><tr><td>" + description + "</td></tr>");
-                                    if (Session["uid"] != null)
-                                    {
-                                        if (emptycountr != "0")
-                                        {
-                                            Response.Write("</tbody></table> </div><footer class=\"panel-footer\"><a href=\"order.aspx?tid=" + tid + "&type_name=" + type_name + "&price="+price+"&uid="+ Session["uid"] +"\" class=\"btn btn-block btn-primary\">预定</a></footer></div></div>");
-                                        }
-                                        else
-                                        {
-                                            Response.Write("</tbody></table> </div><footer class=\"panel-footer\"><a href=\"#\" class=\"btn btn-block btn-primary\" disabled=\"disabled\">房间已满</a></footer></div></div>");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Response.Write("</tbody></table> </div><footer class=\"panel-footer\"><a href=\"login.aspx\" class=\"btn btn-block btn-primary\">请登录后预定</a></footer></div></div>");
-                                    }
-
-                                }
-
-                                    
-                            }
-   
-
-
-                        %>
-                    </div>
-                </div>
-            </div>
         </section>
 
       </main>
