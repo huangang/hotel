@@ -64,30 +64,8 @@
         <td width="10%" class="tableleft">身份</td>
         <td>
             <select name="role">
-                <%
-                    string role1 = Request.QueryString["role"];
-                    if (role1 == "manager")
-                    {
-                        Response.Write(" <option value=\"normal\" >normal</option>");
-                        Response.Write(" <option value=\"operator\">operator</option>");
-                        Response.Write(" <option value=\"manager\" selected=\"selected\">manager</option>");
-                    }
-                    else if (role1 == "operator")
-                    {
-                        Response.Write(" <option value=\"normal\" >normal</option>");
-                        Response.Write(" <option value=\"operator\"selected=\"selected\">operator</option>");
-                        Response.Write(" <option value=\"manager\">manager</option>");
-                    }
-                    else if (role1 == "normal")
-                    {
-                        Response.Write(" <option value=\"normal\" selected=\"selected\">normal</option>");
-                        Response.Write(" <option value=\"operator\">operator</option>");
-                        Response.Write(" <option value=\"manager\">manager</option>");
-                    }
-                %>
-               
+              <option value="normal" selected="selected">normal</option>
             </select>
-            
          </td>
     </tr>
 

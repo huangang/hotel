@@ -66,8 +66,6 @@
         <td>
             <select name="role">
                 <option value="normal" selected="selected">normal</option>
-                <option value="operator">opetater</option>
-                <option value="manager">manager</option>
             </select>
             
          </td>

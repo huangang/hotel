@@ -69,7 +69,7 @@
                 Response.Write("<td>"+email+"</td>");
                 Response.Write("<td>"+role+"</td>");
                 Response.Write("<td>"+ register_time +"</td>");
-                Response.Write("<td>" + "<a href='edit.aspx?uid=" + uid + "&username=" + username + "&email=" + email + "&role=" + role + "'>编辑</a> <a href='#' onclick='del(" + uid + ")'>删除</a>" + "</td></tr>");
+                Response.Write("<td>" + "<a href='edit.aspx?uid=" + uid + "&username=" + username + "&email=" + email + "&role=" + role + "'>编辑</a></tr>");
             }
         }
     %>
@@ -93,48 +93,5 @@
 
     });
 
-    function del(id) {
-        var xmlhttp;
-        var status = "";
-        try {
-            xmlhttp = new ActiveXObject('Msxml2.XMLHTTP');
-        } catch (e) {
-            try {
-                xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-            } catch (e) {
-                try {
-                    xmlhttp = new XMLHttpRequest();
-                } catch (e) { }
-            }
-        }
-
-
-        if (confirm("确定要删除吗？")) {
-
-            xmlhttp.open("GET", "../../delete.ashx?table=user&uid=" + id, true);
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4)
-                //xmlhttp.status==404 代表 没有发现该文件
-                    if (xmlhttp.status == 200) {
-                        //alert(xmlhttp.status);
-                        status = xmlhttp.responseText;
-                        if (status == 1) {
-                            alert("删除成功");
-                        } else {
-                            alert("删除失败");
-                        }
-                        console.log(status);
-                    } else {
-                        alert("发生错误：" + xmlhttp.status);
-                    }
-
-            }
-            xmlhttp.send(null);
-            window.location.href = "index.aspx";
-
-        }
-
-
-    }
 </script>
 
