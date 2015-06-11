@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="changePassword.aspx.cs" Inherits="manager_usercenter_changePassword" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="changePassword.aspx.cs" Inherits="normal_usercenter_changePassword" %>
 
 <!DOCTYPE html>
 <html>

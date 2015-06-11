@@ -65,7 +65,8 @@
   <tr>
     <td class="tableleft">头像</td>
     <td>
-        <img src="" width="70" height="70"/><br>
+        <asp:Image ID="avatarImg" runat="server" Height="70px" Width="70px" />
+        <br>
     </td>
   </tr>
   <tr>

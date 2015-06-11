@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mysqlserver;
 
-public partial class manager_order_edit : System.Web.UI.Page
+public partial class operator_order_edit : System.Web.UI.Page
 {
     private string uid;
     private string oid;

@@ -8,12 +8,13 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mysqlserver;
 
-public partial class manager_usercenter_changePassword : System.Web.UI.Page
+public partial class normal_usercenter_changePassword : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
 
     }
+
     protected void Button1_Click(object sender, EventArgs e)
     {
         string uid = Session["uid"].ToString();
@@ -25,7 +26,9 @@ public partial class manager_usercenter_changePassword : System.Web.UI.Page
         string npw = Request.Form["newPassword"];
         byte[] result2 = Encoding.Default.GetBytes(npw);
         byte[] output2 = md5.ComputeHash(result2);
-        string sql = "update [user] set password='" + BitConverter.ToString(output2).Replace("-", "") + "' where uid = '" + uid + "' and password='" + BitConverter.ToString(output1).Replace("-", "") + "'";
+        string sql = "update [user] set password='" + BitConverter.ToString(output2).Replace("-", "") +
+                     "' where uid = '" + uid + "' and password='" + BitConverter.ToString(output1).Replace("-", "") +
+                     "'";
         SqlServerDataBase obj = new SqlServerDataBase();
         if (obj.Update(sql, null))
         {
@@ -35,4 +38,5 @@ public partial class manager_usercenter_changePassword : System.Web.UI.Page
         {
             Response.Write("<script>alert('修改密码失败')</script>");
         }
+    }
 }

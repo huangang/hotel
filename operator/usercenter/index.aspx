@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="manager_usercenter_index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="operator_usercenter_index" %>
 
 <html>
 <head>
@@ -66,7 +66,7 @@
   <tr>
     <td class="tableleft">头像</td>
     <td>
-        <img src="" width="70" height="70"/><br>
+        <asp:Image ID="avatarImg" runat="server" Height="70px" Width="70px" />
     </td>
   </tr>
   <tr>

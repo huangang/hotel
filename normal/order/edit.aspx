@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="edit.aspx.cs" Inherits="manager_order_edit" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="edit.aspx.cs" Inherits="normal_order_edit" %>
 <%@ Import Namespace="Mysqlserver" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.ServiceModel" %>

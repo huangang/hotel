@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mysqlserver;
 
-public partial class manager_usercenter_index : System.Web.UI.Page
+public partial class normal_usercenter_index : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -21,10 +21,20 @@ public partial class manager_usercenter_index : System.Web.UI.Page
             string email2 = ds.Tables[0].Rows[0][2].ToString();
             string role2 = ds.Tables[0].Rows[0][4].ToString();
             string register_time2 = ds.Tables[0].Rows[0][5].ToString();
+            string avatar = ds.Tables[0].Rows[0][6].ToString();
             username.Text = username2;
             email.Text = email2;
             role.Text = role2;
             register_time.Text = register_time2;
+            if (avatar == null || avatar == "")
+            {
+                avatarImg.ImageUrl = "../../img/avatar.png";
+            }
+            else
+            {
+                avatarImg.ImageUrl = avatar;
+            }
+
 
         }
     }

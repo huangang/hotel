@@ -9,7 +9,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mysqlserver;
 
-public partial class manager_user_add : System.Web.UI.Page
+    public partial class operator_user_add : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {

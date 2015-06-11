@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mysqlserver;
 
-public partial class manager_user_edit : System.Web.UI.Page
+public partial class operator_user_edit : System.Web.UI.Page
 {
     private string uid;
     protected void Page_Load(object sender, EventArgs e)

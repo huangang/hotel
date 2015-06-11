@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="manager_index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="operator_index" %>
 <%
     if(Session["uid"]==null){
         Response.Write("<script>alert(\"请登陆\");window.location.href=\"../login.aspx\";</script>");

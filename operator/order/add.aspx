@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="add.aspx.cs" Inherits="manager_order_add" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="add.aspx.cs" Inherits="operator_order_add" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="Mysqlserver" %>
 

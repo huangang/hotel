@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="manager_user_index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="index.aspx.cs" Inherits="operator_user_index" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="Mysqlserver" %>
 
